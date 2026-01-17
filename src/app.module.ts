@@ -17,12 +17,15 @@ import { PaymentModule } from './modules/payment/payment.module';
 
         // Database - Using SQLite for development (switch to PostgreSQL for production)
         TypeOrmModule.forRoot({
-            type: 'better-sqlite3',
-            database: 'uac_rdc.db',
-            entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true, // Auto-create tables in development
-            logging: true,
-        }),
+      type: 'postgres',
+      host: process.env.DATABASE_HOST || 'db',
+      port: parseInt(process.env.DATABASE_PORT || '5432', 10),
+      username: process.env.DATABASE_USER || 'postgres',
+      password: process.env.DATABASE_PASSWORD || 'TonMotDePasseSecret',
+      database: process.env.DATABASE_NAME || 'uac_rdc',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
 
         // Uncomment below for PostgreSQL (and comment out SQLite config above)
         // TypeOrmModule.forRootAsync({
